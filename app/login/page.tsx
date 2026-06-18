@@ -26,7 +26,8 @@ export default function LoginPage() {
     setLoading(false);
 
     if (error) {
-      setError(error.message);
+      setError(error.message || 'Failed to sign in. Check your email is confirmed.');
+      setPassword('');
       return;
     }
 
@@ -38,6 +39,9 @@ export default function LoginPage() {
       <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/50">
         <h1 className="text-3xl font-semibold text-slate-900">Login to Fuel Tracker</h1>
         <p className="mt-3 text-slate-600">Enter your account details to manage fuel entries.</p>
+        <div className="mt-4 rounded-2xl bg-amber-50 p-3 text-xs text-amber-700">
+          Make sure you confirmed your email first (check your inbox for the confirmation link).
+        </div>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
           <label className="block">

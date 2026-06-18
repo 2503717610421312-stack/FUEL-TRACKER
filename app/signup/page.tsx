@@ -22,10 +22,6 @@ export default function SignupPage() {
       setError('Email and password are required.');
       return;
     }
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters.');
-      return;
-    }
 
     setLoading(true);
     const { error } = await supabase.auth.signUp({ email, password });
@@ -36,10 +32,9 @@ export default function SignupPage() {
       return;
     }
 
-    setMessage('Account created successfully. Redirecting...');
-    setTimeout(() => {
-      router.push('/dashboard');
-    }, 1200);
+    setMessage('Account created! Check your email to confirm, then sign in.');
+    setEmail('');
+    setPassword('');
   };
 
   return (
@@ -47,6 +42,9 @@ export default function SignupPage() {
       <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/50">
         <h1 className="text-3xl font-semibold text-slate-900">Create your account</h1>
         <p className="mt-3 text-slate-600">Sign up to start tracking fuel and expenses.</p>
+        <div className="mt-4 rounded-2xl bg-blue-50 p-3 text-xs text-blue-700">
+          A confirmation email will be sent. Check your inbox and click the link to verify.
+        </div>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
           <label className="block">

@@ -22,21 +22,12 @@ export default function FuelEntryForm({ userId, onEntryAdded }: FuelEntryFormPro
     setSuccess('');
 
     if (!date || !amount || !price) {
-      setError('Please provide date, amount, and price.');
+      setError('Please fill in all fields.');
       return;
     }
 
-    const parsedAmount = Number(amount);
-    const parsedPrice = Number(price);
-
-    if (Number.isNaN(parsedAmount) || parsedAmount <= 0) {
-      setError('Fuel amount must be a positive number.');
-      return;
-    }
-    if (Number.isNaN(parsedPrice) || parsedPrice <= 0) {
-      setError('Fuel price must be a positive number.');
-      return;
-    }
+    const parsedAmount = parseFloat(amount);
+    const parsedPrice = parseFloat(price);
 
     setLoading(true);
     const { error } = await supabase.from('fuel_entries').insert([{ user_id: userId, date, amount: parsedAmount, price: parsedPrice }]);
@@ -47,7 +38,7 @@ export default function FuelEntryForm({ userId, onEntryAdded }: FuelEntryFormPro
       return;
     }
 
-    setSuccess('Fuel entry added successfully.');
+    setSuccess('✓ Entry saved!');
     setDate('');
     setAmount('');
     setPrice('');
